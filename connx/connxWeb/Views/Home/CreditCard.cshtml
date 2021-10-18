@@ -1,0 +1,33 @@
+﻿@model connxWeb.ViewModels.CreditCard
+@{
+    ViewBag.Title = "CreditCard";
+}
+
+<h2>CreditCard</h2>
+
+@using (Html.BeginForm("CreditCard", "Home", FormMethod.Post)) {
+    <br />
+    @Html.Label("Credit Card Type: ") @Html.DropDownListFor(m => m.SelectedCardTypeId, Model.CardTypes, new { id ="ccTypeId" })
+    <br />
+    @Html.Label("Credit Card Number: ") @Html.TextAreaFor(d => d.CardNumber, new { id = "cardNo" })
+    <br />
+    @Html.Label("Message: " + @Model.Message)
+    <br />
+    <input type="submit" value=" Validate Card" id="btnSubmit" disabled  />
+}
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $(document).ready(function () {
+        $("#cardNo").on("input", function () {
+            $("#btnSubmit").attr("disabled", true);
+            if ($("#cardNo").val().length > 0) {
+                $("#btnSubmit").attr("disabled", false);
+            }
+        });
+        $("#ccTypeId").on("change", function () {
+            $("#cardNo").val("");
+            $("#btnSubmit").attr("disabled", true);
+        })
+    });
+
+</script>
